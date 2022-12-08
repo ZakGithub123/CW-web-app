@@ -1,0 +1,107 @@
+<v-container>
+  <v-row v-if="cartContent.length">
+    <!-- Cart section -->
+    <v-col cols="6">
+      <v-row>
+        <v-col cols="6" v-for="(item, index) in cartContent" :key="item.id">
+          <v-card variant="outlined">
+            <v-list lines="one">
+              <v-list-item>
+                <v-list-item-title class="font-weight-bold">
+                  Subject:
+                </v-list-item-title>
+                <template v-slot:append> {{ item.subject }} </template>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title class="font-weight-bold">
+                  Location:
+                </v-list-item-title>
+                <template v-slot:append> {{ item.location }} </template>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title class="font-weight-bold">
+                  Price:
+                </v-list-item-title>
+                <template v-slot:append> £{{ item.price }} </template>
+              </v-list-item>
+            </v-list>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                prepend-icon="fas fa-times-circle"
+                size="large"
+                color="warning"
+                variant="elevated"
+                @click="removeItemFromCart(index)"
+              >
+                Remove
+              </v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-col>
+
+    <!-- Checkout section -->
+    <v-col cols="6">
+      <v-card>
+        <v-card-title>Checkout</v-card-title>
+        <v-card-item>
+          <v-form v-model="form" @submit.prevent="onSubmit">
+            <v-text-field
+              :rules="[required, validName]"
+              v-model="name"
+              label="Name"
+            >
+            </v-text-field>
+            <v-text-field
+              :rules="[required, validPhoneNumber]"
+              v-model="phoneNumber"
+              label="Phone number"
+            >
+            </v-text-field>
+
+            <v-btn
+              block
+              :disabled="!form"
+              prepend-icon="fas fa-credit-card"
+              size="large"
+              color="success"
+              type="submit"
+              variant="elevated"
+              >Checkout
+            </v-btn>
+          </v-form>
+        </v-card-item>
+      </v-card>
+    </v-col>
+  </v-row>
+
+  <v-row v-else>
+    <v-col cols="12">
+      <v-card variant="tonal">
+        <v-card-title class="text-center"
+          >There are no items in the shopping cart...</v-card-title
+        >
+      </v-card>
+    </v-col>
+  </v-row>
+
+  <!-- Order confirmation dialog -->
+  <v-dialog v-model="dialog" max-width="400px">
+    <v-card>
+      <v-card-title class="text-h5"> Order submitted </v-card-title>
+      <v-divider />
+      <v-card-text> Thanks for your purchase! </v-card-text>
+      <v-card-actions>
+        <v-btn color="info" variant="elevated" block @click="dialog = false"
+          >Accept</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</v-container>

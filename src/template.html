@@ -1,0 +1,26 @@
+<v-app>
+  <v-main>
+    <!-- Navbar -->
+    <v-app-bar color="info" density="compact">
+      <v-container>
+        <v-row justify="space-between">
+          <v-col align-self="center"
+            ><v-app-bar-title>CW1-Web-App</v-app-bar-title></v-col
+          >
+
+          <v-col class="text-right">
+            <v-btn prepend-icon="fas fa-home" to="/" size="large">Home</v-btn>
+            <v-btn
+              prepend-icon="fas fa-shopping-cart"
+              to="cart"
+              size="large"
+              :disabled="getCartCount < 1"
+              >Cart</v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-app-bar>
+    <router-view />
+  </v-main>
+</v-app>

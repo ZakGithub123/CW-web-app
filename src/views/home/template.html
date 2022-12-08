@@ -1,0 +1,93 @@
+<v-container>
+  <!-- Sorting controls -->
+  <v-row justify="center">
+    <v-col cols="6">
+      <v-card variant="flat">
+        <v-card-item>
+          <v-row>
+            <v-col cols="6">
+              <v-radio-group
+                color="info"
+                label="Sort by:"
+                v-model="sortCatalogBy"
+              >
+                <v-radio label="Subject" value="subject"></v-radio>
+                <v-radio label="Location" value="location"></v-radio>
+                <v-radio label="Price" value="price"></v-radio>
+                <v-radio label="Availability" value="spaces"></v-radio>
+              </v-radio-group>
+            </v-col>
+
+            <v-col cols="6">
+              <v-radio-group color="info" label="Order:" v-model="catalogOrder">
+                <v-radio label="Descending" value="desc"></v-radio>
+                <v-radio label="Ascending" value="asc"></v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
+        </v-card-item>
+      </v-card>
+    </v-col>
+  </v-row>
+
+  <!-- Lessons catalog -->
+  <v-row>
+    <v-col cols="3" v-for="item in lessons" :key="item.id">
+      <v-card variant="outlined">
+        <v-img :src="`img/${item.image}`"></v-img>
+
+        <hr />
+
+        <v-list lines="one">
+          <v-list-item>
+            <v-list-item-title class="text-h5">
+              {{item.subject}}
+            </v-list-item-title>
+
+            <template v-slot:prepend>
+              <v-avatar color="info">
+                <v-icon :icon="item.icon"></v-icon>
+              </v-avatar>
+            </template>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title class="font-weight-bold">
+              Location:
+            </v-list-item-title>
+            <template v-slot:append> {{ item.location }} </template>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title class="font-weight-bold">
+              Price:
+            </v-list-item-title>
+            <template v-slot:append> £{{ item.price }} </template>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title class="font-weight-bold">
+              Spaces:
+            </v-list-item-title>
+            <template v-slot:append> {{ item.spaces }} </template>
+          </v-list-item>
+        </v-list>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            prepend-icon="fas fa-shopping-cart"
+            color="info"
+            size="large"
+            variant="elevated"
+            @click="addItemToCart(item.id)"
+            :disabled="item.spaces < 1"
+          >
+            Add to cart
+          </v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
+</v-container>
